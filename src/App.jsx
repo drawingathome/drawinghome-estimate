@@ -569,10 +569,11 @@ export default function App(){
 
   const handlePDF = async () => {
     try {
-      const html2canvas = (await import("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.esm.min.js")).default;
-      const jsPDF = (await import("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js")).then(m=>m.jsPDF||m.default?.jsPDF);
-      const el = printRef.current;
-      if(!el) return;
+      
+    const html2canvas = (await import("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.esm.min.js")).default;
+const jsPDFModule = await import("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");
+const jsPDF = jsPDFModule.jsPDF || jsPDFModule.default?.jsPDF;
+const el = printRef.current;
       const canvas = await html2canvas(el, {scale:2, useCORS:true, backgroundColor:"#fff"});
       const imgData = canvas.toDataURL("image/png");
       const pdf = new (await jsPDF)({orientation:"portrait",unit:"mm",format:"a4"});
